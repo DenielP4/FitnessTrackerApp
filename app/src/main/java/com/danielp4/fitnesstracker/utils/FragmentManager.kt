@@ -5,9 +5,13 @@ import androidx.fragment.app.Fragment
 import com.danielp4.fitnesstracker.R
 
 object FragmentManager {
+
+    var currentFragment: Fragment? = null
+
     fun setFragment(newFragment: Fragment, activity: AppCompatActivity) {
         val transaction = activity.supportFragmentManager.beginTransaction()
         transaction.replace(R.id.place_holder, newFragment)
         transaction.commit()
+        currentFragment = newFragment
     }
 }
