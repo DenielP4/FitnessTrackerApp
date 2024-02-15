@@ -17,6 +17,7 @@
             android:exported="false" />
         <activity
             android:noHistory="true"
+            android:theme="@style/Base.Theme.SplashScreen"
             android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>

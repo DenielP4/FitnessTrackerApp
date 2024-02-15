@@ -40,6 +40,11 @@ android {
 }
 
 dependencies {
+    // Gif
+    implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.23")
+
+    // Fragment
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
 
     // Lottie
     implementation("com.airbnb.android:lottie:6.3.0")

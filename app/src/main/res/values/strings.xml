@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">FitnessTracker</string>
+    <string name="app_name">Каменный пресс за 30 дней</string>
+    <string name="slogan">На пути к совершенству!</string>
+    <string name="day">День:</string>
+    <string name="exercise">упражнений</string>
+    <string name="waiting_message">Упражнения начнутся через:</string>
+    <string name="start">НАЧАТЬ</string>
+    <string name="next_button">ДАЛЕЕ</string>
+    <string name="done">Конец тренировки!</string>
 </resources>
