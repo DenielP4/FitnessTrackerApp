@@ -33,6 +33,7 @@ class SplashActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
+                binding.lottieView.pauseAnimation()
                 startActivity(Intent(this@SplashActivity, MainActivity::class.java))
             }
 
