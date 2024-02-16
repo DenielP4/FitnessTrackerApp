@@ -5,10 +5,13 @@ import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.danielp4.fitnesstracker.R
 import com.danielp4.fitnesstracker.databinding.WaitingFragmentBinding
 import com.danielp4.fitnesstracker.utils.FragmentManager
+import com.danielp4.fitnesstracker.utils.Resource
 import com.danielp4.fitnesstracker.utils.TimeUtils
 
 
@@ -18,6 +21,8 @@ class WaitingFragment : Fragment() {
 
     private lateinit var binding: WaitingFragmentBinding
     private var timer: CountDownTimer? = null
+
+    private var actionBar: ActionBar? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +34,7 @@ class WaitingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        actionBar = Resource.setActionBar(R.string.waiting, activity as AppCompatActivity)
         binding.pBar.max = COUNT_DOWN_TIME.toInt()
         startTimer()
     }

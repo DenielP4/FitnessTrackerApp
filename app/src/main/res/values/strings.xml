@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Каменный пресс за 30 дней</string>
+    <string name="app_name">Тренировки дома</string>
     <string name="slogan">На пути к совершенству!</string>
     <string name="day">День:</string>
     <string name="exercise">упражнений</string>
@@ -7,4 +7,7 @@
     <string name="start">НАЧАТЬ</string>
     <string name="next_button">ДАЛЕЕ</string>
     <string name="done">Конец тренировки!</string>
+    <string name="name_sport">Каменный пресс за 30 дней</string>
+    <string name="exercises">Упражнения</string>
+    <string name="waiting">Приготовьтесь</string>
 </resources>

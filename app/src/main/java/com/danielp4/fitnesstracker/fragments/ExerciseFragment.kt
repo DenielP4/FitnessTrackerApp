@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import com.danielp4.fitnesstracker.R
@@ -28,6 +29,8 @@ class ExerciseFragment : Fragment() {
     private var exerciseCounter = 0
     private var exList: ArrayList<ExerciseModel>? = null
 
+    private var actionBar: ActionBar? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,6 +41,7 @@ class ExerciseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        actionBar = (activity as AppCompatActivity).supportActionBar
         viewModel.mutableListExercise.observe(viewLifecycleOwner) { exerciseList ->
             exList = exerciseList
             nextExercise()
@@ -64,6 +68,8 @@ class ExerciseFragment : Fragment() {
     private fun showExercise(exercise: ExerciseModel) = with(binding) {
         imgMain.setImageDrawable(GifDrawable(root.context.assets, exercise.image))
         tvName.text = exercise.name
+        val title = "$exerciseCounter / ${exList?.size}"
+        actionBar?.title = title
     }
 
     private fun showNextExercise()  = with(binding) {

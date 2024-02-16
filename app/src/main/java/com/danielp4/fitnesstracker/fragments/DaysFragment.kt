@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import com.danielp4.fitnesstracker.adapters.ExerciseModel
 import com.danielp4.fitnesstracker.databinding.FragmentDaysBinding
 import com.danielp4.fitnesstracker.utils.FragmentManager
 import com.danielp4.fitnesstracker.utils.MainViewModel
+import com.danielp4.fitnesstracker.utils.Resource
 import java.util.ArrayList
 
 
@@ -23,6 +25,8 @@ class DaysFragment : Fragment(), DaysAdapter.Listener {
 
     private lateinit var binding: FragmentDaysBinding
     private val viewModel: MainViewModel by activityViewModels()
+    private var actionBar: ActionBar? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +38,7 @@ class DaysFragment : Fragment(), DaysAdapter.Listener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        actionBar = Resource.setActionBar(R.string.name_sport, (activity as AppCompatActivity))
         initRcView()
     }
 
