@@ -64,7 +64,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:progressTint="@color/design_default_color_error" />
+                android:layout_marginBottom="5dp"
+                android:progressTint="@color/design_default_color_error"
+                android:scaleY="2" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
