@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.ActionBar
@@ -15,6 +18,7 @@ import com.danielp4.fitnesstracker.adapters.DayModel
 import com.danielp4.fitnesstracker.adapters.DaysAdapter
 import com.danielp4.fitnesstracker.adapters.ExerciseModel
 import com.danielp4.fitnesstracker.databinding.FragmentDaysBinding
+import com.danielp4.fitnesstracker.utils.DialogManager
 import com.danielp4.fitnesstracker.utils.FragmentManager
 import com.danielp4.fitnesstracker.utils.MainViewModel
 import com.danielp4.fitnesstracker.utils.Resource
@@ -27,6 +31,12 @@ class DaysFragment : Fragment(), DaysAdapter.Listener {
     private val viewModel: MainViewModel by activityViewModels()
     private var actionBar: ActionBar? = null
 
+    private lateinit var dayAdapter: DaysAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,12 +48,13 @@ class DaysFragment : Fragment(), DaysAdapter.Listener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.currentDay = 0
         actionBar = Resource.setActionBar(R.string.name_sport, (activity as AppCompatActivity))
         initRcView()
     }
 
     private fun initRcView() = with(binding) {
-        val dayAdapter = DaysAdapter(this@DaysFragment)
+        dayAdapter = DaysAdapter(this@DaysFragment)
         rcViewDays.apply {
             layoutManager = LinearLayoutManager(activity) // as App
             adapter = dayAdapter
@@ -57,13 +68,27 @@ class DaysFragment : Fragment(), DaysAdapter.Listener {
     private fun fillDaysArray(): ArrayList<DayModel> {
         val tArray = ArrayList<DayModel>()
         resources.getStringArray(R.array.day_exercise).forEach { day ->
+            viewModel.currentDay++
+            val exCounter = day.split(",").size
             val dayModel = DayModel(
                 exercises = day,
-                isDone = false
+                dayNumber = tArray.size + 1,
+                isDone = viewModel.getExerciseCount() == exCounter,
             )
             tArray.add(dayModel)
         }
+        binding.progressBar.max = tArray.size
+        updateRestDaysUI(tArray)
         return tArray
+    }
+
+    private fun updateRestDaysUI(tArray: ArrayList<DayModel>) {
+        val continueDay = tArray.filter { !it.isDone }.size.toString()
+        binding.apply {
+            val restDays = getString(R.string.rest) + " " + continueDay + " " + getString(R.string.days)
+            tvRestDays.text = restDays
+            progressBar.progress = tArray.size - continueDay.toInt()
+        }
     }
 
     private fun fillExerciseList(day: DayModel) {
@@ -76,12 +101,12 @@ class DaysFragment : Fragment(), DaysAdapter.Listener {
                 ExerciseModel(
                     name = exerciseArray[0],
                     time = exerciseArray[1],
-                    image = exerciseArray[2]
+                    image = exerciseArray[2],
+                    isDone = false
                 )
             )
         }
         viewModel.mutableListExercise.value = tempList
-
     }
 
     companion object {
@@ -90,9 +115,52 @@ class DaysFragment : Fragment(), DaysAdapter.Listener {
     }
 
     override fun onClick(day: DayModel) {
-        fillExerciseList(day)
-        FragmentManager.setFragment(ExerciseListFragment.newInstance(), activity as AppCompatActivity)
+        if (day.isDone) {
+            DialogManager.showDialog(
+                activity as AppCompatActivity,
+                R.string.reset_day_message,
+                object : DialogManager.Listener {
+                    override fun onClick() {
+                        viewModel.savePref(day.dayNumber.toString(), 0)
+                        fillExerciseList(day)
+                        viewModel.currentDay = day.dayNumber
+                        FragmentManager.setFragment(
+                            ExerciseListFragment.newInstance(),
+                            activity as AppCompatActivity
+                        )
+                    }
+                }
+            )
+        } else {
+            fillExerciseList(day)
+            viewModel.currentDay = day.dayNumber
+            Log.d("MyLog", "$day")
+            FragmentManager.setFragment(
+                ExerciseListFragment.newInstance(),
+                activity as AppCompatActivity
+            )
+        }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        return inflater.inflate(R.menu.main_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.reset) {
+            DialogManager.showDialog(
+                activity as AppCompatActivity,
+                R.string.reset_days_message,
+                object : DialogManager.Listener {
+                    override fun onClick() {
+                        viewModel.pref?.edit()?.clear()?.apply()
+                        dayAdapter.submitList(fillDaysArray())
+                    }
+                }
+            )
+
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 }

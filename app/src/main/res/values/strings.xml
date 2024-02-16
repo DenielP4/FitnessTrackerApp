@@ -10,4 +10,12 @@
     <string name="name_sport">Каменный пресс за 30 дней</string>
     <string name="exercises">Упражнения</string>
     <string name="waiting">Приготовьтесь</string>
+    <string name="rest">Осталось:</string>
+    <string name="days">дней</string>
+    <string name="reset">Сбросить</string>
+    <string name="alert">Внимание!</string>
+    <string name="back">ОТМЕНА</string>
+    <string name="enter">ВНИМАНИЕ</string>
+    <string name="reset_days_message">Вы уверены, что хотите сбросить весь прогресс тренировок?</string>
+    <string name="reset_day_message">Хотите пройти этот день заново?</string>
 </resources>

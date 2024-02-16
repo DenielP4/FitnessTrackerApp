@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -39,7 +40,9 @@ class ExerciseListFragment : Fragment() {
         actionBar = Resource.setActionBar(R.string.exercises, activity as AppCompatActivity)
         init()
         viewModel.mutableListExercise.observe(viewLifecycleOwner) { exerciseList ->
-            Log.d("MyLog", "$exerciseList")
+            for (i in 0 until viewModel.getExerciseCount()) {
+                exerciseList[i] = exerciseList[i].copy(isDone = true)
+            }
             exAdapter.submitList(exerciseList)
         }
     }

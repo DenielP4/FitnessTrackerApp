@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
@@ -31,6 +30,8 @@ class ExerciseFragment : Fragment() {
 
     private var actionBar: ActionBar? = null
 
+    private var currentDay = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,26 +42,31 @@ class ExerciseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        currentDay = viewModel.currentDay
+        Log.d("MyLog", "${viewModel.getExerciseCount()}")
+        exerciseCounter = viewModel.getExerciseCount()
         actionBar = (activity as AppCompatActivity).supportActionBar
         viewModel.mutableListExercise.observe(viewLifecycleOwner) { exerciseList ->
             exList = exerciseList
+            Log.d("MyLog", "$exerciseCounter")
+            Log.d("MyLog", "${exList?.size!!}")
             nextExercise()
         }
         binding.btnNext.setOnClickListener {
             nextExercise()
         }
+
     }
 
     private fun nextExercise() {
-        Log.d("MyLog", "Новый")
         timer?.cancel()
         if (exerciseCounter < exList?.size!!) {
             val ex = exList?.get(exerciseCounter++) ?: return
-            Log.d("MyLog", "$ex")
             showExercise(ex)
             setExerciseType(ex)
             showNextExercise()
         } else {
+            exerciseCounter++
             FragmentManager.setFragment(DayFinishFragment.newInstance(), activity as AppCompatActivity)
         }
     }
@@ -94,7 +100,6 @@ class ExerciseFragment : Fragment() {
     }
 
     private fun setExerciseType(exercise: ExerciseModel) {
-        Log.d("MyLog", "setExerciseType ${exercise.time}")
         if (exercise.time.startsWith("x")) {
             val tvTime = exercise.time.removePrefix("x") + " раз"
             binding.tvTime.text = tvTime
@@ -106,7 +111,6 @@ class ExerciseFragment : Fragment() {
     }
 
     private fun startTimer(time: Int) = with(binding) {
-        Log.d("MyLog", "Мы в таймере ${time}")
         val countDownTime = time * 1000L
         pBar.max = countDownTime.toInt()
         timer?.cancel()
@@ -125,6 +129,7 @@ class ExerciseFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
+        viewModel.savePref(currentDay.toString(), exerciseCounter-1)
         timer?.cancel()
     }
 

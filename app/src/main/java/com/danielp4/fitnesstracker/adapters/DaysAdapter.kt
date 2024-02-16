@@ -22,6 +22,7 @@ class DaysAdapter(
             tvName.text = name
             val counter = day.exercises.split(",").filter { it!="0" && it!="8" }.size.toString() + " " + root.context.getString(R.string.exercise)
             tvCounter.text = counter
+            checkBox.isChecked = day.isDone
             itemView.setOnClickListener {
                 listener.onClick(day)
             }
@@ -30,12 +31,10 @@ class DaysAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.days_list_item, parent, false)
-        Log.d("MyLog", "onCreateViewHolder")
         return DayHolder(view)
     }
 
     override fun onBindViewHolder(holder: DayHolder, position: Int) {
-        Log.d("MyLog", "onBindViewHolder")
         holder.setData(getItem(position), listener)
     }
 

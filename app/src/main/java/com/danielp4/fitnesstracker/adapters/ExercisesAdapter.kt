@@ -19,18 +19,17 @@ class ExercisesAdapter : ListAdapter<ExerciseModel, ExercisesAdapter.ExercizeHol
         fun setData(exercise: ExerciseModel) = with(binding) {
             tvName.text = exercise.name
             tvCount.text = exercise.time
+            chB.isChecked = exercise.isDone
             imgEx.setImageDrawable(GifDrawable(root.context.assets, exercise.image))
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExercizeHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.exercise_list_item, parent, false)
-        Log.d("MyLog", "onCreateViewHolder")
         return ExercizeHolder(view)
     }
 
     override fun onBindViewHolder(holder: ExercizeHolder, position: Int) {
-        Log.d("MyLog", "onBindViewHolder")
         holder.setData(getItem(position))
     }
 
