@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">Тренировки дома</string>
+    <string name="app_name">Workout</string>
     <string name="slogan">На пути к совершенству!</string>
     <string name="day">День:</string>
+    <string name="training">Тренировка на</string>
     <string name="exercise">упражнений</string>
     <string name="waiting_message">Упражнения начнутся через:</string>
     <string name="start">НАЧАТЬ</string>
@@ -18,4 +19,5 @@
     <string name="enter">ВНИМАНИЕ</string>
     <string name="reset_days_message">Вы уверены, что хотите сбросить весь прогресс тренировок?</string>
     <string name="reset_day_message">Хотите пройти этот день заново?</string>
+    <string name="main_text">Измени себя!</string>
 </resources>

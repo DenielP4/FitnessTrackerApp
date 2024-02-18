@@ -11,7 +11,7 @@
         <item>Отжимания с боковым прессом|30|pushup_climb.gif</item><!--7-->
         <item>Отдых|40|cat.gif</item><!--8-->
     </string-array>
-    <string-array name="day_exercise">
+    <string-array name="day_exercise_0">
         <item>1,0,3,0,5,8,4,0,2,0,7,0,1</item> <!-- Day 1 -->
         <item>1,0,3,0,5,0,5,0,2,0,7,0,1,0,1,0,3,0,5,0,5</item> <!-- Day 2 -->
         <item>1,0,3,0,5,0,5,0,2,0,7,0,1,0,1,0,3,0,5,0,5</item> <!-- Day 3 -->
@@ -32,5 +32,22 @@
         <item>1,0,3,0,5,0,5,0,2,0,7,0,1,0,1,0,3,0,5,0,5</item> <!-- Day 18 -->
         <item>1,0,3,0,5,0,5,0,2,0,7,0,1,0,1,0,3,0,5,0,5</item> <!-- Day 19 -->
         <item>1,0,3,0,5,0,5,0,2,0,7,0,1,0,1,0,3,0,5,0,5</item> <!-- Day 20 -->
+    </string-array>
+    <string-array name="day_exercise_1">
+        <item>1,0,3,0,5,8,4,0,2,0,7,0,1,3,2,1,0,6,5,4,3,2,1,4,5,6,7,8,0</item> <!-- Day 1 -->
+        <item>1,0,3,0,5,0,5,0,2,0,7,0,1,0,1,0,3,0,5,0,5</item> <!-- Day 2 -->
+        <item>1,0,3,0,5,0,5,0,2,0,7,0,1,0,1,0,3,0,5,0,5</item> <!-- Day 3 -->
+        <item>1,0,3,0,5,0,5,0,2,0,7,0,1,0,1,0,3,0,5,0,5</item> <!-- Day 4 -->
+    </string-array>
+    <string-array name="day_exercise_2">
+        <item>1,0,3,0,5,8,4,0,2,0,7,0,1</item> <!-- Day 1 -->
+        <item>1,0,3,0,5,0,5,0,2,0,7,0,1,0,1,0,3,0,5,0,5</item> <!-- Day 2 -->
+    </string-array>
+    <string-array name="training">
+        <item>пресс|30 дней|taz.gif|0</item>
+        <item>руки|20 дней|pushup.gif|1</item>
+        <item>ноги|30 дней|climbing.gif|2</item>
+        <item>ягодицы|25 дней|angle.gif|3</item>
+        <item>спину|40 дней|pushup_jump.gif|4</item>
     </string-array>
 </resources>

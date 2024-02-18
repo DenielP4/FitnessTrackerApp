@@ -129,7 +129,7 @@ class ExerciseFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        viewModel.savePref(currentDay.toString(), exerciseCounter-1)
+        viewModel.savePref(viewModel.currentTraining+currentDay.toString(), exerciseCounter-1)
         timer?.cancel()
     }
 

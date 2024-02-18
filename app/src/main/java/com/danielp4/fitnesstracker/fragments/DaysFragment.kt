@@ -67,19 +67,54 @@ class DaysFragment : Fragment(), DaysAdapter.Listener {
 
     private fun fillDaysArray(): ArrayList<DayModel> {
         val tArray = ArrayList<DayModel>()
-        resources.getStringArray(R.array.day_exercise).forEach { day ->
-            viewModel.currentDay++
-            val exCounter = day.split(",").size
-            val dayModel = DayModel(
-                exercises = day,
-                dayNumber = tArray.size + 1,
-                isDone = viewModel.getExerciseCount() == exCounter,
-            )
-            tArray.add(dayModel)
+        val nameArray = viewModel.currentTraining
+        when(nameArray) {
+            "0" -> {
+                resources.getStringArray(R.array.day_exercise_0).forEach { day ->
+                    val dayModel = fill(day, tArray)
+                    tArray.add(dayModel)
+                }
+            }
+            "1" -> {
+                resources.getStringArray(R.array.day_exercise_1).forEach { day ->
+                    val dayModel = fill(day, tArray)
+                    tArray.add(dayModel)
+                }
+            }
+            "2" -> {
+                resources.getStringArray(R.array.day_exercise_2).forEach { day ->
+                    val dayModel = fill(day, tArray)
+                    tArray.add(dayModel)
+                }
+            }
+//            "3" -> {
+//                resources.getStringArray(R.array.day_exercise_3).forEach { day ->
+//                    val dayModel = fill(day, tArray)
+//                    tArray.add(dayModel)
+//                }
+//            }
+//            "4" -> {
+//                resources.getStringArray(R.array.day_exercise_4).forEach { day ->
+//                    val dayModel = fill(day, tArray)
+//                    tArray.add(dayModel)
+//                }
+//            }
         }
+
         binding.progressBar.max = tArray.size
         updateRestDaysUI(tArray)
         return tArray
+    }
+
+    private fun fill(day: String, tArray: ArrayList<DayModel>): DayModel {
+        viewModel.currentDay++
+        val exCounter = day.split(",").size
+        val dayModel = DayModel(
+            exercises = day,
+            dayNumber = tArray.size + 1,
+            isDone = viewModel.getExerciseCount() == exCounter,
+        )
+        return dayModel
     }
 
     private fun updateRestDaysUI(tArray: ArrayList<DayModel>) {
@@ -121,7 +156,7 @@ class DaysFragment : Fragment(), DaysAdapter.Listener {
                 R.string.reset_day_message,
                 object : DialogManager.Listener {
                     override fun onClick() {
-                        viewModel.savePref(day.dayNumber.toString(), 0)
+                        viewModel.savePref(viewModel.currentTraining+day.dayNumber.toString(), 0)
                         fillExerciseList(day)
                         viewModel.currentDay = day.dayNumber
                         FragmentManager.setFragment(
